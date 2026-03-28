@@ -1,0 +1,10 @@
+[package]
+name = "mediatr_pipeline_behaviors"
+version = "0.1.0"
+edition = "2021"
+description = "MediatR pipeline behaviors example - middleware pattern"
+
+[dependencies]
+mediatr = { path = "../mediatr" }
+async-trait = "0.1"
+tokio = { version = "1.0", features = ["rt-multi-thread", "macros", "time"] }

@@ -1,0 +1,59 @@
+[package]
+name = "clalulana_api"
+version = "0.1.0"
+edition = "2021"
+authors = ["Claudio de Oliveira"]
+description = "RESTful API with CQRS pattern, PostgreSQL, and OAuth2/JWT authentication"
+
+[lib]
+name = "clalulana_api"
+path = "src/lib.rs"
+
+[[bin]]
+name = "clalulana_api"
+path = "src/main.rs"
+
+[dependencies]
+# Web framework
+actix-web = "4"
+actix-cors = "0.7"
+actix-rt = "2"
+
+# Serialization
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# Database
+sqlx = { version = "0.8", features = ["runtime-tokio", "tls-rustls", "postgres", "uuid", "chrono", "migrate"] }
+
+# MediatR (local CQRS library)
+mediatr = { path = "../mediatr/", features = ["full"] }
+
+# Authentication
+jsonwebtoken = "9"
+argon2 = "0.5"
+
+# Utilities
+uuid = { version = "1", features = ["v4", "serde"] }
+chrono = { version = "0.4", features = ["serde"] }
+dotenvy = "0.15"
+
+# Async
+tokio = { version = "1", features = ["full"] }
+async-trait = "0.1"
+futures = "0.3"
+
+# Logging & Tracing
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
+tracing-actix-web = "0.7"
+
+# Error handling
+thiserror = "1"
+
+[dev-dependencies]
+# Testing
+actix-rt = "2"
+tokio-test = "0.4"
+mockall = "0.12"
+

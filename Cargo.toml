@@ -1,0 +1,10 @@
+[workspace]
+resolver = "3"
+members = [
+    "mediatr",
+    "clalulana_api",
+    "mediatr_basic_usage",
+    "mediatr_cqrs_example",
+    "mediatr_pipeline_behaviors",
+    "mediatr_validation_example",
+]

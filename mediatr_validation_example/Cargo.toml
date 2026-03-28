@@ -1,0 +1,10 @@
+[package]
+name = "mediatr_validation_example"
+version = "0.1.0"
+edition = "2021"
+description = "MediatR validation example - automatic request validation"
+
+[dependencies]
+mediatr = { path = "../mediatr" }
+async-trait = "0.1"
+tokio = { version = "1.0", features = ["rt-multi-thread", "macros"] }

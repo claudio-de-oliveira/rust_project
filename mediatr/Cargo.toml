@@ -1,0 +1,32 @@
+[package]
+name = "mediatr"
+version = "0.1.0"
+edition = "2021"
+authors = ["MediatR Contributors"]
+description = "A Rust implementation of the Mediator pattern with CQRS support, pipeline behaviors, and dependency injection"
+license = "MIT"
+repository = "https://github.com/rust-mediatr/mediatr"
+keywords = ["mediator", "cqrs", "pipeline", "middleware", "ddd"]
+categories = ["asynchronous", "rust-patterns"]
+readme = "README.md"
+
+[features]
+default = ["async", "validation"]
+async = ["tokio"]
+validation = []
+tracing = ["dep:tracing"]
+full = ["async", "validation", "tracing"]
+
+[dependencies]
+async-trait = "0.1"
+thiserror = "1.0"
+futures = "0.3"
+parking_lot = "0.12"
+
+# Optional dependencies
+tokio = { version = "1.0", features = ["rt", "sync"], optional = true }
+tracing = { version = "0.1", optional = true }
+
+[dev-dependencies]
+tokio = { version = "1.0", features = ["rt-multi-thread", "macros"] }
+tokio-test = "0.4"
