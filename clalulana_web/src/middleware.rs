@@ -14,6 +14,7 @@ pub struct AuthUser {
     pub info: AuthInfo,
 }
 
+
 #[axum::async_trait]
 impl<S> FromRequestParts<S> for AuthUser
 where
