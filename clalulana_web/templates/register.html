@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Registrar — Clalulana{% endblock %}
+
+{% block content %}
+<div class="auth-wrapper">
+    <div class="auth-card">
+        <div class="auth-header">
+            <h1>Criar conta</h1>
+            <p>Preencha os dados abaixo para criar sua conta.</p>
+        </div>
+
+        {% match success %}
+        {% when Some with (msg) %}
+        <div class="alert alert-success">
+            <svg class="alert-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+            <span>{{ msg }}</span>
+        </div>
+        {% when None %}
+        {% endmatch %}
+
+        {% match error %}
+        {% when Some with (msg) %}
+        <div class="alert alert-error">
+            <svg class="alert-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg>
+            <span>{{ msg }}</span>
+        </div>
+        {% when None %}
+        {% endmatch %}
+
+        <form method="POST" action="/register" class="auth-form">
+            <div class="form-group">
+                <label for="username">Nome de usuário</label>
+                <input type="text" id="username" name="username" required
+                       placeholder="johndoe" autocomplete="username">
+            </div>
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" name="email" required
+                       placeholder="seu@email.com" autocomplete="email">
+            </div>
+            <div class="form-group">
+                <label for="password">Senha</label>
+                <input type="password" id="password" name="password" required
+                       placeholder="Mínimo 8 caracteres" autocomplete="new-password"
+                       minlength="8">
+            </div>
+            <button type="submit" class="btn btn-primary btn-full">Criar conta</button>
+        </form>
+
+        <p class="auth-footer">
+            Já tem uma conta? <a href="/login">Faça login</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

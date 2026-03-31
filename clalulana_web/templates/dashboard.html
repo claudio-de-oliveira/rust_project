@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard — Clalulana{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Dashboard</h1>
+    <p class="page-subtitle">Visão geral da sua conta</p>
+</div>
+
+{% match message %}
+{% when Some with (msg) %}
+<div class="alert alert-success">
+    <svg class="alert-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+    <span>{{ msg }}</span>
+</div>
+{% when None %}
+{% endmatch %}
+
+{% match error %}
+{% when Some with (msg) %}
+<div class="alert alert-error">
+    <svg class="alert-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg>
+    <span>{{ msg }}</span>
+</div>
+{% when None %}
+{% endmatch %}
+
+<div class="card-grid">
+    <div class="card card-profile">
+        <div class="card-header">
+            <h2>Meu Perfil</h2>
+            <a href="/users/{{ user.id }}/edit" class="btn btn-sm btn-outline">Editar</a>
+        </div>
+        <div class="card-body">
+            <div class="profile-avatar">
+                <span class="avatar-initials">{{ user.username.chars().next().unwrap_or('U') }}</span>
+            </div>
+            <div class="profile-details">
+                <div class="detail-row">
+                    <span class="detail-label">Usuário</span>
+                    <span class="detail-value">{{ user.username }}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">E-mail</span>
+                    <span class="detail-value">{{ user.email }}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Função</span>
+                    <span class="badge badge-{{ user.role }}">{{ user.role }}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Status</span>
+                    {% if user.is_active %}
+                    <span class="badge badge-active">Ativo</span>
+                    {% else %}
+                    <span class="badge badge-inactive">Inativo</span>
+                    {% endif %}
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Criado em</span>
+                    <span class="detail-value">{{ user.created_date() }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

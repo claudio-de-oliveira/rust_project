@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Clalulana - Sistema de gerenciamento de usuários">
+    <title>{% block title %}Clalulana{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="/" class="logo">Clalulana</a>
+            <div class="nav-links">
+                {% match auth %}
+                {% when Some with (user) %}
+                    <a href="/dashboard" class="nav-link">Dashboard</a>
+                    {% if user.role == "admin" %}
+                    <a href="/users" class="nav-link">Usuários</a>
+                    {% endif %}
+                    <span class="nav-user">{{ user.username }}</span>
+                    <form method="POST" action="/logout" class="nav-logout-form">
+                        <button type="submit" class="nav-link btn-link">Sair</button>
+                    </form>
+                {% when None %}
+                    <a href="/login" class="nav-link">Entrar</a>
+                    <a href="/register" class="nav-link nav-link-accent">Registrar</a>
+                {% endmatch %}
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Clalulana. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+</body>
+</html>

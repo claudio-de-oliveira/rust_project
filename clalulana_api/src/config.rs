@@ -16,7 +16,8 @@ impl AppConfig {
     /// Requires `DATABASE_URL` and `JWT_SECRET` to be set.
     /// Other values have sensible defaults.
     pub fn from_env() -> Result<Self, Box<dyn std::error::Error>> {
-        dotenvy::dotenv().ok();
+        let env_path = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join(".env");
+        dotenvy::from_path(env_path).ok();
 
         Ok(Self {
             database_url: env::var("DATABASE_URL")

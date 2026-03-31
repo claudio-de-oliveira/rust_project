@@ -3,6 +3,7 @@ resolver = "3"
 members = [
     "mediatr",
     "clalulana_api",
+    "clalulana_web",
     "mediatr_basic_usage",
     "mediatr_cqrs_example",
     "mediatr_pipeline_behaviors",

@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}Usuários — Clalulana{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Usuários</h1>
+    <p class="page-subtitle">Gerenciamento de contas do sistema</p>
+</div>
+
+{% match message %}
+{% when Some with (msg) %}
+<div class="alert alert-success">
+    <svg class="alert-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+    <span>{{ msg }}</span>
+</div>
+{% when None %}
+{% endmatch %}
+
+{% match error %}
+{% when Some with (msg) %}
+<div class="alert alert-error">
+    <svg class="alert-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg>
+    <span>{{ msg }}</span>
+</div>
+{% when None %}
+{% endmatch %}
+
+<div class="card">
+    <div class="card-body">
+        {% if users.is_empty() %}
+        <div class="empty-state">
+            <p>Nenhum usuário encontrado.</p>
+        </div>
+        {% else %}
+        <div class="table-wrapper">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Usuário</th>
+                        <th>E-mail</th>
+                        <th>Função</th>
+                        <th>Status</th>
+                        <th>Criado em</th>
+                        <th class="th-actions">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for u in users %}
+                    <tr>
+                        <td class="td-user">
+                            <span class="avatar-sm">{{ u.username.chars().next().unwrap_or('U') }}</span>
+                            <span>{{ u.username }}</span>
+                        </td>
+                        <td>{{ u.email }}</td>
+                        <td><span class="badge badge-{{ u.role }}">{{ u.role }}</span></td>
+                        <td>
+                            {% if u.is_active %}
+                            <span class="badge badge-active">Ativo</span>
+                            {% else %}
+                            <span class="badge badge-inactive">Inativo</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ u.created_date() }}</td>
+                        <td class="td-actions">
+                            <a href="/users/{{ u.id }}/edit" class="btn btn-xs btn-outline">Editar</a>
+                            <form method="POST" action="/users/{{ u.id }}/delete"
+                                  class="inline-form"
+                                  onsubmit="return confirm('Tem certeza que deseja excluir este usuário?')">
+                                <button type="submit" class="btn btn-xs btn-danger">Excluir</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
